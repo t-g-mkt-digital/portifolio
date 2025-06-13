@@ -1,187 +1,549 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfólio Tarcilla Torres</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        background-color: #000000;
-        color: #ffffff;
-        font-family: 'Helvetica Neue', sans-serif;
-      }
-      .whatsapp-float {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 999;
-      }
-      .hover-overlay {
-        position: relative;
-        overflow: hidden;
-      }
-      .hover-overlay:hover .overlay-text {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .overlay-text {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(123, 30, 60, 0.85);
-        color: #fff;
-        padding: 1rem;
-        transform: translateY(100%);
-        opacity: 0;
-        transition: all 0.4s ease-in-out;
-      }
-      .menu-button {
-        transition: transform 0.3s ease;
-      }
-      .menu-button:hover {
-        transform: translateX(4px);
-        color: #e11d48;
-      }
-      .download-btn {
-        border: 2px solid #e11d48;
-        color: #e11d48;
-        padding: 0.5rem 1.5rem;
-        border-radius: 0.375rem;
-        transition: all 0.3s ease;
-      }
-      .download-btn:hover {
-        background-color: #e11d48;
-        color: white;
-      }
-    </style>
-  </head>
-  <body class="flex min-h-screen">
-    <!-- Menu Lateral -->
-    <aside class="w-64 bg-black p-6 sticky top-0 h-screen hidden md:block">
-      <h1 class="text-2xl font-bold text-white mb-10">Tarcilla Torres</h1>
-      <nav class="space-y-6">
-        <button class="block w-full text-left text-2xl font-semibold menu-button" onclick="showSection('inicio')">Início</button>
-        <button class="block w-full text-left text-2xl font-semibold menu-button" onclick="showSection('portfolio')">Trabalhos</button>
-        <button class="block w-full text-left text-2xl font-semibold menu-button" onclick="showSection('feedbacks')">Feedbacks</button>
-        <button class="block w-full text-left text-2xl font-semibold menu-button" onclick="showSection('orcamento')">Orçamento</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólio Tarcilla Torres</title>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <!-- Tailwind CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+  <!-- Google Font: Playfair Display -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <!-- Animate.css for animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <!-- Font Awesome for icons (Instagram) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- SwiperJS CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+  <style>
+    html { scroll-behavior: smooth; }
+
+    @font-face {
+  font-family: 'Dream Avenue';
+  src: url('assets/fonts/Dream-Avenue.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Tan Pearl';
+  src: url('assets/fonts/tan-pearl 2.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+    h3, h2 {
+      font-family: 'Dream Avenue', serif !important;
+    }
+    body {
+      background: #0d0d0d;
+      color: #fff;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+    }
+    .text-white {
+      background-color: #000;
+    }
+    .swiper-pagination-bullet-active  {
+      background: #9f1239 !important;
+    }
+    .swiper-button-next, .swiper-button-prev {
+      color: #9f1239;
+    }
+    .feedbacks-card img{
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 1.2rem;
+      transition: transform .45s cubic-bezier(.32,2,.55,.27), filter .35s;
+    }
+    .servicos-card{
+      border-radius: 1.2rem;
+      padding: 2rem;
+      position: relative;
+      color: #fff;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: #fff solid 1px;
+      margin: 10px;
+      width: 80%;
+    }
+    .servicos-card h3{
+      padding-top: 10px;
+    }
+    .servicos-card-cta{
+      border-radius: 1.2rem;
+      padding: 2rem;
+      position: relative;
+      color: #fff; 
+      margin: 10px;
+      padding: 2rem;
+    }
+    button {
+  background-color: #9f1239; 
+  border: none;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+    /* Logo responsiveness */
+    .logo-img { height: 3rem; }
+    @media (min-width: 768px) {
+      .logo-img { height: 4rem; }
+    }
+    /* Watermark background image */
+    .watermark-img {
+      position: fixed;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+      max-width: 80vw;
+      opacity: 1;
+      transition: opacity 0.5s;
+    }
+    /* Active nav link highlight */
+    .nav-link.active { color: #9f1239; }
+    /* Portfolio card styling */
+    .portfolio-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 32px #000000aa;
+      cursor: pointer;
+      background: #191919;
+      display: flex;
+      align-items: flex-end;
+      transition: transform .15s, box-shadow .25s;
+    }
+    .portfolio-card img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(8%) brightness(97%);
+      transition: transform .45s cubic-bezier(.32,2,.55,.27), filter .35s;
+    }
+    .portfolio-card:hover img {
+      transform: scale(1.08) rotate(-0.7deg);
+      filter: grayscale(0%) brightness(110%);
+    }
+    .card-title {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 0;
+      background: linear-gradient(0deg, #191919e0 85%, transparent 100%);
+      padding: 2.2rem 1.2rem 1.1rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #fff;
+      text-shadow: 1px 1px 10px #00000088;
+      transition: background 0.3s;
+    }
+    .portfolio-card:hover .card-title {
+      background: linear-gradient(0deg, #9f123980 85%, transparent 100%);
+    }
+    /* Modal (overlay and content) */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(18,18,18,0.98);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .swiper-slide img {
+      max-height: 500px;
+      object-fit: contain;
+      margin: auto;
+    }
+    .servicos{
+      display: flex;
+    }
+    .modal-bg.hidden { display: none; }
+    .modal-img-container {
+      position: relative;
+      max-width: 96vw;
+      max-height: 85vh;
+      background: #181818;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-img-container img {
+      max-width: 80vw;
+      max-height: 70vh;
+      display: block;
+      border-radius: 0.9rem 0.9rem 0 0;
+    }
+    .modal-content { padding: 1.2rem 1.2rem 1.5rem; text-align: center; }
+    .modal-content h4 { font-family: 'Playfair Display', serif; }
+    .close-btn {
+      position: absolute;
+      top: 12px; right: 20px;
+      background: #9f1239;
+      color: #fff;
+      border: none;
+      font-size: 2rem;
+      border-radius: 50%;
+      width: 44px; height: 44px;
+      display: flex;
+      align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px #9f1239a5;
+      cursor: pointer;
+      transition: background 0.2s;
+      z-index: 1;
+    }
+    .close-btn:hover { background: #881337; }
+    /* WhatsApp floating button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10000;
+    }
+    /* Accent text color */
+    .text-accent { color: #9f1239; }
+    .text-accent.new { color: #ffff; }
+    .text-accent.nolink { color: white; }
+    /* Hidden elements before reveal */
+    .scroll-reveal { opacity: 0; }
+    @media (max-width: 900px) {
+      .watermark-img { width: 70vw; top: 20px; }
+    }
+    @media (max-width: 640px) {
+      .watermark-img { width: 80vw; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Watermark background -->
+  <img src="assets/branding/watermark.png" alt="Tarcilla Torres" class="watermark-img" />
+  <!-- Fixed Header -->
+  <header class="fixed top-0 left-0 w-full bg-black/80 text-white z-50">
+    <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
+      <!-- Logo (also a Home button) -->
+      <i class="fa-solid fa-house" onclick="showAll()" style="cursor:pointer;"></i>
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex space-x-8 items-center">
+        <a href="#portfolio" class="nav-link" onclick="event.preventDefault(); openPortfolio();">Trabalhos</a>
+        <a href="#contact" class="nav-link" onclick="showAll()">Contato</a>
+        <a href="https://www.instagram.com/tarcillatorres_mkt/" target="_blank" aria-label="Instagram" class="text-xl"><i class="fab fa-instagram"></i></a>
       </nav>
-    </aside>
+      <!-- Mobile menu button (hamburger) -->
+      <button id="hamburger" class="md:hidden text-3xl focus:outline-none" onclick="toggleMenu()">&#9776;</button>
+    </div>
+    <!-- Mobile dropdown menu -->
+    <div id="mobileMenu" class="md:hidden hidden flex flex-col items-center bg-black/95 px-4 py-4 space-y-4">
+      <a href="#portfolio" class="nav-link" onclick="openPortfolio(); toggleMenu(); return false;">Trabalhos</a>
+      <a href="#about" class="nav-link" onclick="showAll(); toggleMenu();">Quem Somos</a>
+      <a href="#contact" class="nav-link" onclick="showAll(); toggleMenu();">Contato</a>
+      <a href="#feedbacks" class="nav-link" onclick="showAll(); toggleMenu();">Feedbacks</a>
+      <a href="https://www.instagram.com/tarcillatorres_mkt/" target="_blank" onclick="toggleMenu()">Instagram</a>
+    </div>
+  </header>
+  <!-- Main content container (hidden when portfolio is open) -->
+  <div id="mainContentContainer" class="pt-16">
+    <!-- Hero Section (Início) -->
+    <section id="inicio" class="min-h-screen relative flex items-center justify-center">
+      <!-- Blurred background images side by side -->
+      <div class="absolute inset-0 flex">
+        <img src= "assets/portifolio/img-background/portifolio-tarci.png" alt="Projeto Neuropsicóloga" class="w-1/2 object-cover object-center filter blur-lg opacity-30" />
+        <img src="assets/portifolio/img-background/portifolio-tarci-2.png" alt="Projeto Psicologia" class="w-1/2 object-cover object-center filter blur-lg opacity-30" />
+        <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/301ac4176630095.64c87c4861a30.png" alt="Projeto Osteopatia" class="w-1/2 object-cover object-center filter blur-lg opacity-30" />
+      </div>
+      <!-- Dark overlay for contrast -->
+      <div class="absolute inset-0 bg-[#0d0d0d] opacity-80"></div>
+      <!-- (No overlaid text on hero for visual focus) -->
+    </section>
+    <!-- Services Section (Serviços) -->
+    <section id="servicos" class="py-16 px-6 scroll-reveal">
+      <h2 class="text-4xl font-bold mb-12" style="font-family:'Playfair Display',serif;">Serviços</h2>
+      <div class="max-w-6xl mx-auto servicos">
 
-    <!-- Conteúdo Principal -->
-    <main class="flex-1 p-6 md:p-12 space-y-20 animate__animated animate__fadeIn" id="content">
-      <!-- Início -->
-      <section id="inicio" class="section">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <img src="uploads/2025/04/tarci-img.jpg" alt="Tarcilla Torres" class="rounded-lg shadow-lg max-w-sm mx-auto animate__animated animate__fadeInLeft" />
-          <div class="animate__animated animate__fadeInRight">
-            <h2 class="text-4xl font-bold text-white mb-4">Sobre Tarcilla</h2>
-            <p class="text-lg leading-relaxed text-gray-300 mb-6">
-              Especialista em <span class="text-red-500">marketing digital</span> e comunicação estratégica, com foco em redes sociais e design visual. Atua há 5 anos ajudando marcas a se posicionarem online com autenticidade, criatividade e resultados reais.
-            </p>
-            <h3 class="text-2xl font-semibold text-white mb-2">Serviços:</h3>
-            <ul class="list-disc list-inside text-gray-300 mb-6">
-              <li>Web Design</li>
-              <li>Gerência de mídias sociais</li>
-              <li>Edição de vídeos <em>(para redes sociais)</em></li>
-              <li>Criação de Websites (WordPress e SPA)</li>
-            </ul>
-            <a href="uploads/2025/04/portifolio-tarcilla-torres.pdf" download class="download-btn inline-block">Baixar Portfólio</a>
-          </div>
+        <!-- Service 1: Social Media Management -->
+        <div class="relative bg-cover bg-center text-center  py-32 px-6 mb-12 servicos-card">
+          <img src="assets/portifolio/img-background/media-management.png" alt="Social Media Icon"/>
+          <h3 class="text-3xl font-bold mb-4" style="font-family:'Playfair Display',serif;">Gerenciamento de Redes Sociais</h3>
+          <p class="text-lg max-w-3xl mx-auto">Gestão completa das suas redes sociais, incluindo planejamento de conteúdo, criação de posts atraentes, agendamento inteligente e análise de métricas para aumentar o engajamento e fortalecer sua marca online.</p>
         </div>
-      </section>
-
-      <!-- Portfólio -->
-      <section id="portfolio" class="section hidden">
-        <h2 class="text-4xl font-bold text-white mb-10 animate__animated animate__fadeInDown">Trabalhos</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Projeto 1 -->
-          <div class="hover-overlay cursor-pointer rounded overflow-hidden shadow-lg animate__animated animate__zoomIn" onclick="mostrarDetalhesProjeto('projeto1')">
-            <img src="uploads/2025/04/portifolio-tarci.png" alt="Projeto 1" class="w-full h-64 object-cover" />
-            <div class="overlay-text">
-              <h3 class="text-2xl font-bold">Neuropsicóloga</h3>
-              <p>Identidade visual, organização de feed e copywriting.</p>
-            </div>
-          </div>
-
-          <!-- Projeto 2 -->
-          <div class="hover-overlay cursor-pointer rounded overflow-hidden shadow-lg animate__animated animate__zoomIn" onclick="mostrarDetalhesProjeto('projeto2')">
-            <img src="uploads/2025/04/portifolio-tarci-2.png" alt="Projeto 2" class="w-full h-64 object-cover" />
-            <div class="overlay-text">
-              <h3 class="text-2xl font-bold">Psicologia</h3>
-              <p>Conteúdo emocional e inspirador para autoestima.</p>
-            </div>
-          </div>
+        <!-- Service 2: Website & Landing Page Creation -->
+        <div class="relative bg-cover bg-center text-center py-32 px-6 mb-12 servicos-card">
+          <img src="assets/portifolio/img-background/Siteelandingpage.png" alt="Social Media Icon"/>
+          <h3 class="text-3xl font-bold mb-4" style="font-family:'Playfair Display',serif;">Criação de site e Landing Page</h3>
+          <p class="text-lg max-w-3xl mx-auto">Desenvolvimento de sites e landing pages responsivas e focadas em conversão. Criamos interfaces modernas alinhadas à identidade da marca, proporcionando experiências memoráveis e resultados efetivos.</p>
         </div>
-      </section>
+        <!-- Service 3: Design -->
+        <div class="relative bg-cover bg-center text-center  py-32 px-6 mb-12 servicos-card"> 
+          <img src="assets/portifolio/img-background/Design.png" alt="Social Media Icon"/>
+          <h3 class="text-3xl font-bold mb-4" style="font-family:'Playfair Display',serif;">Design</h3>
+          <p class="text-lg max-w-3xl mx-auto">Design gráfico profissional para a sua marca: criação de logotipos, identidade visual, materiais promocionais e layouts atraentes. Transformamos ideias em visuais impactantes que comunicam os valores da sua marca.</p>
+        </div>
 
-      <!-- Detalhes do Projeto -->
-      <section id="detalhes-projeto" class="section hidden animate__animated animate__fadeIn">
-        <button onclick="fecharDetalhesProjeto()" class="text-red-500 mb-6 text-lg">&larr; Voltar</button>
-        <div id="conteudo-detalhes-projeto"></div>
-      </section>
+      </div>
+      <section id="cta" class="max-w-6xl mx-auto">
+              <!-- Service 4: Custom Solution CTA -->
+              <div class="relative bg-center text-center py-32 px-6 mb-12 servicos-card-cta">
+                <h3 class="text-3xl font-bold mb-4" style="font-family:'Playfair Display',serif;">Não encontrou o que precisava?</h3>
+                <p class="text-lg max-w-3xl mx-auto">Precisa de algo diferente ou personalizado? </p>
+                  <button class="mt-4">
+                    <a href="#contact" class="text-accent new hover:underline" onclick="showAll()">Entre em contato</a>
+                  </button>
+              </div>
+              </section>
+    </section>
 
-      <!-- Feedbacks -->
-      <section id="feedbacks" class="section hidden animate__animated animate__fadeIn">
-        <h2 class="text-4xl font-bold text-white mb-6">Feedbacks</h2>
+
+
+    <!-- Seção Feedbacks -->
+    <section id="feedbacks" class="py-16 px-6 scroll-reveal">
+
+
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold mb-8" style="font-family:'Playfair Display',serif;">Feedbacks</h2>
+        <div class="portfolio-card" onclick="openModalFolder('Folders/feedbacks', 'Feedbacks')">
+
+        </div>
+
+      <div class="max-w-6xl mx-auto servicos">
+
+     
+        <div class="relative bg-cover bg-center text-center  py-32 px-6 mb-12 feedbacks-card">
+          <img src="assets/feedbacks/1.jpeg" alt="Social Media - Psicóloga" onerror="hideParent(this)" onclick="openModalFolder('assets/feedbacks', 'Feedbacks', 1)" />
+        </div>
+   
+        <div class="relative bg-cover bg-center text-center py-32 px-6 mb-12 feedbacks-card">
+          <img src="assets/feedbacks/2.jpeg" alt="Social Media - Psicóloga" onerror="hideParent(this)" onclick="openModalFolder('assets/feedbacks', 'Feedbacks', 2)"/>
+        </div>
+        <div class="relative bg-cover bg-center text-center py-32 px-6 mb-12 feedbacks-card ">
+          <img src="assets/feedbacks/3.jpeg" alt="Social Media - Psicóloga" onerror="hideParent(this)" onclick="openModalFolder('assets/feedbacks', 'Feedbacks', 3)"/>
+        </div>
+ 
+      </div>
+    </section>
+
+
+
+
+    <!-- About Us Section (Quem Somos) -->
+    <section id="about" class="py-16 px-6 scroll-reveal">
+      <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+        <!-- Profile Photo -->
         <div class="space-y-4">
-          <blockquote class="bg-gray-800 p-6 rounded-lg shadow">"Trabalhar com a Tarcilla foi transformador. Meus resultados dobraram nas redes!" — Cliente A</blockquote>
-          <blockquote class="bg-gray-800 p-6 rounded-lg shadow">"A identidade visual que ela criou para meu perfil trouxe muito mais profissionalismo." — Cliente B</blockquote>
+          <img src="assets/profile/tarci-img.jpg" alt="Tarcilla Torres" class="w-80 h-80 object-cover object-center rounded-xl" />
         </div>
-      </section>
+        <!-- Profile Text -->
+        <div>
+          <h2 class="text-4xl font-bold mb-6" style="font-family:'Playfair Display',serif;">Tarcilla Torres</h2>
+          <span>Social media e designer</span><br><br>
+          <p class="text-gray-300 text-lg mb-4">Especialista em mídias sociais com mais de 3 anos de experiência gerenciando estratégias digitais criativas para Instagram, LinkedIn e Facebook. Apaixonada por transformar ideias em conteúdos visuais impactantes usando Canva e design gráfico, está sempre buscando otimização através de estratégias de SEO focadas em palavras-chave para ampliar alcance e engajamento.</p>
+          <p class="text-gray-300 text-lg">Conheça um pouco do <a href="https://www.behance.net/tarcillatorres" target="_blank" class="text-accent hover:underline">meu trabalho no Behance</a>.</p>
+        </div>
+        <!-- Second Profile Photo (optional) -->
+        <div class="space-y-4">
+          <img src="assets/profile/guilherme.jpeg" alt="Tarcilla Torres" class="w-80 h-80 object-cover object-center rounded-xl" />
+        </div>
+        <!-- Second Profile Text (optional) -->
+        <div>
+          <h2 class="text-4xl font-bold mb-6" style="font-family:'Playfair Display',serif;">Guilherme Santos</h2>
+          <span>Desenvolvedor Web</span><br><br>
+          <p class="text-gray-300 text-lg mb-4">Desenvolvedor Web há mais de 7 anos, com foco em landing pages e desempenho otimizado.</p>
+          <p class="text-gray-300 text-lg">Conheça um pouco do <a href="https://www.linkedin.com/in/guilherme-santos-03b83499/" target="_blank" class="text-accent nolink hover:underline">meu trabalho no LinkedIn</a>.</p>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section (Contato) -->
+    <section id="contact" class="py-16 px-6 scroll-reveal">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-4xl font-bold mb-6" style="font-family:'Playfair Display',serif;">Contato</h2>
+        <p class="text-gray-300 text-lg mb-4">Entre em contato pelo WhatsApp (clique no ícone flutuante) ou através das nossas redes sociais:</p>
+        <p class="text-gray-300 text-lg">
+          <i class="fab fa-instagram"></i> Instagram: <a href="https://www.instagram.com/tarcillatorres_mkt/" target="_blank" class="text-accent hover:underline">@tarcillatorres_mkt</a><br>
+          <i class="fa-brands fa-square-behance"></i> Behance: <a href="https://www.behance.net/tarcillatorres" target="_blank" class="text-accent hover:underline">tarcillatorres</a>
+          <br>
+          <i class="fa-brands fa-whatsapp"></i> Whatsapp: +55 (11) 98797-4902
+        </p>
+      </div>
+    </section>
+  </div>
+  <!-- Portfolio Section (Trabalhos) - hidden by default -->
+  <section id="portfolio" class="py-16 px-6" style="display:none;">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-4xl font-bold mb-8 text-white">Trabalhos</h2>
+      <div class="grid gap-8 md:grid-cols-2">
+        <!-- Portfolio Card 1 -->
+        <div class="portfolio-card" onclick="openModalFolder('assets/portifolio/Psico-stress', 'Social Media - Psicóloga')">
+          <img src="assets/portifolio/Psico-stress/1.png" alt="Social Media - Psicóloga" onerror="hideParent(this)" />
+          <div class="card-title">Social Media - Psicóloga</div>
+        </div>
+        <!-- Portfolio Card 2 -->
+        <div class="portfolio-card" onclick="openModalFolder('assets/portifolio/industr-maquina', 'Social Media - Indústria')">
+          <img src="assets/portifolio/industr-maquina/1.png" alt="Social Media - Indústria" onerror="hideParent(this)" />
+          <div class="card-title">Social Media - Indústria</div>
+        </div>
+        <!-- Portfolio Card 3 -->
+        <div class="portfolio-card" onclick="openModalFolder('assets/portifolio/Psico-alimentar', 'Social Media - Alimentar')">
+          <img src="assets/portifolio/Psico-alimentar/1.png" alt="Social Media - Alimentar" onerror="hideParent(this)" />
+          <div class="card-title">Social Media - Alimentar</div>
+        </div>
+        <!-- Portfolio Card 4 -->
+        <div class="portfolio-card" onclick="openModalFolder('assets/portifolio/Psico-Mulheres', 'Social Media - Mulheres')">
+          <img src="assets/portifolio/Psico-Mulheres/1.png" alt="Social Media - Mulheres" onerror="hideParent(this)" />
+          <div class="card-title">Social Media - Mulheres</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <!-- Orçamento -->
-      <section id="orcamento" class="section hidden animate__animated animate__fadeIn">
-        <h2 class="text-4xl font-bold text-white mb-6">Peça seu Orçamento</h2>
-        <p class="text-gray-300">Fale diretamente comigo pelo WhatsApp clicando no ícone flutuante ou acesse meu Instagram:</p>
-        <a href="https://www.instagram.com/tarcillatorres_mkt/" target="_blank" class="text-red-400 underline">@tarcillatorres_mkt</a>
-      </section>
-    </main>
+  <div id="modal-bg" class="fixed inset-0 bg-black bg-opacity-80 hidden justify-center items-center z-50">
+    <div class="w-full bg-zinc-900 rounded-lg p-4" style="position: relative;top: 15%">
+      <button class="  text-white text-3xl"  onclick="closeModal()">&times;</button>
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="modal-content"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <div class="text-center text-white mt-4" id="modal-info"></div>
+    </div>
+  </div>
+  <!-- WhatsApp Floating Contact Button -->
+  <a href="https://wa.me/5511987974902?text=Gostaria%20de%20um%20or%C3%A7amento" target="_blank" class="whatsapp-float animate__animated animate__pulse animate__infinite">
+    <img src="assets/social-icons/whatsapp-icon.png" alt="WhatsApp" width="60" height="60" />
+  </a>
+  <!-- Scripts -->
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/+5511987974902?text=Gostaria de um orcamento" target="_blank" class="whatsapp-float">
-      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" width="60" />
-    </a>
+  <script>
+    // Toggle mobile menu visibility
+    function toggleMenu() {
+  const menu = document.getElementById('mobileMenu');
+  if (menu) menu.classList.toggle('hidden');
+}
 
-    <!-- Scripts -->
-    <script>
-      function showSection(id) {
-        document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
+let swiper;
+
+function openPortfolio() {
+  document.getElementById("mainContentContainer")?.style.setProperty("display", "none");
+  document.getElementById("portfolio")?.style.setProperty("display", "block");
+  window.scrollTo({ top: 0 });
+}
+
+function showAll() {
+  document.getElementById("mainContentContainer")?.style.setProperty("display", "block");
+  document.getElementById("portfolio")?.style.setProperty("display", "none");
+  window.scrollTo({ top: 0 });
+}
+
+function openModalFolder(folderPath, title, index = 1) {
+  const images = [];
+
+  const loadNext = () => tryExtensions(folderPath, title, index, ['png', 'jpeg', 'jpg']);
+
+  function tryExtensions(folder, title, idx, extensions, attempt = 0) {
+    if (attempt >= extensions.length) {
+      if (images.length > 0) {
+        openModal(images, title);
+      } else {
+        console.warn(`Nenhuma imagem encontrada em: ${folder}`);
       }
+      return;
+    }
 
-      function mostrarDetalhesProjeto(projetoId) {
-        document.getElementById('portfolio').classList.add('hidden');
-        document.getElementById('detalhes-projeto').classList.remove('hidden');
+    const ext = extensions[attempt];
+    const src = `${folder}/${idx}.${ext}`;
+    const img = new Image();
 
-        let conteudo = '';
-        if (projetoId === 'projeto1') {
-          conteudo = `
-            <h3 class="text-3xl font-bold text-white mb-4">Neuropsicóloga</h3>
-            <p class="text-gray-300 mb-4">Criação de identidade visual, organização de feed e copywriting focado em neurociência.</p>
-            <img src="uploads/2025/04/portifolio-tarci.png" alt="Imagem 1" class="mb-4 rounded shadow">
-            <img src="https://via.placeholder.com/500x300.png?text=Mais+do+projeto+1" alt="Imagem 2" class="rounded shadow">
-          `;
-        } else if (projetoId === 'projeto2') {
-          conteudo = `
-            <h3 class="text-3xl font-bold text-white mb-4">Psicologia</h3>
-            <p class="text-gray-300 mb-4">Série de posts voltados para autoestima, empatia e acolhimento.</p>
-            <img src="uploads/2025/04/portifolio-tarci-2.png" alt="Imagem 1" class="mb-4 rounded shadow">
-            <img src="https://via.placeholder.com/500x300.png?text=Mais+do+projeto+2" alt="Imagem 2" class="rounded shadow">
-          `;
+    img.onload = () => {
+      images.push(src);
+      index++;
+      loadNext();
+    };
+
+    img.onerror = () => {
+      tryExtensions(folder, title, idx, extensions, attempt + 1);
+    };
+
+    img.src = src;
+  }
+
+  loadNext();
+}
+
+    function openModal(images, title) {
+      const modalBg = document.getElementById("modal-bg");
+      const modalContent = document.getElementById("modal-content");
+      const modalInfo = document.getElementById("modal-info");
+
+      modalContent.innerHTML = images
+        .map((src) => `<div class="swiper-slide"><img src="${src}" alt="" /></div>`)
+        .join("");
+      modalInfo.innerHTML = `<h4 class="text-xl font-bold">${title}</h4>`;
+
+      modalBg.classList.remove("hidden");
+
+      if (swiper) swiper.destroy(true, true);
+      swiper = new Swiper(".mySwiper", {
+        loop: true,
+        grabCursor: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    }
+
+    function closeModal() {
+      document.getElementById("modal-bg").classList.add("hidden");
+      if (swiper) swiper.destroy(true, true);
+    }
+
+
+    function hideParent(img) {
+      if (img && img.parentNode) img.parentNode.style.display = 'none';
+    }
+    // Menu active link highlighting
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+    // Fade out watermark on scroll
+    window.addEventListener('scroll', () => {
+      const wm = document.querySelector('.watermark-img');
+      if (wm) {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const maxScroll = 500;
+        wm.style.opacity = 1 - Math.min(scrollY, maxScroll) / maxScroll;
+      }
+    });
+    // Scroll reveal animations
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('scroll-reveal');
+          entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+          obs.unobserve(entry.target);
         }
-        document.getElementById('conteudo-detalhes-projeto').innerHTML = conteudo;
-      }
-
-      function fecharDetalhesProjeto() {
-        document.getElementById('detalhes-projeto').classList.add('hidden');
-        document.getElementById('portfolio').classList.remove('hidden');
-      }
-    </script>
-  </body>
+      });
+    }, { threshold: 0.1 });
+    revealElements.forEach(el => observer.observe(el));
+  </script>
+</body>
 </html>
